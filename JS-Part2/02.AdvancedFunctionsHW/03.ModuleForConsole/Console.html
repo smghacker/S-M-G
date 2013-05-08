@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style type="text/css">
+        #consoleScreen {
+            border: 2px solid;
+            padding:10px;
+        }
+    </style>
+</head>
+<body>
+    <script type="text/javascript">
+       //Writing a line to the console 
+       //Writing a line to the console using a format
+       //Writing to the console should call toString() to each element
+       //Writing errors and warnings to the console with and without format
+        function SpecialConsole() {
+            this.writeLine = function () {
+                var arrArg = arguments;
+                var len = arrArg.length;
+                for (var i = 0; i < len; i++) {
+                    arrArg[i] = JSON.stringify(arrArg[i]);
+                }
+
+                switch (len) {
+                    case 0: console.log(); break;
+                    case 1: console.log(arrArg[0]); break;
+                    default:
+                        var output = stringFormat(arrArg);
+                        console.log(output);
+                        break;
+                }
+            }
+
+            this.writeError = function () {
+                var arrArg = arguments;
+                var len = arrArg.length;
+                for (var i = 0; i < len; i++) {
+                    arrArg[i] = JSON.stringify(arrArg[i]);
+                }
+
+                switch (len) {
+                    case 0: console.error(); break;
+                    case 1: console.error(arrArg[0]); break;
+                    default:
+                        var output = stringFormat(arrArg);
+                        console.error(output);
+                        break;
+                }
+            }
+
+            this.writeWarning = function () {
+                var arrArg = arguments;
+                var len = arrArg.length;
+                for (var i = 0; i < len; i++) {
+                    arrArg[i] = JSON.stringify(arrArg[i]);
+                }
+
+                switch (len) {
+                    case 0: console.warn(); break;
+                    case 1: console.warn(arrArg[0]); break;
+                    default:
+                        var output = stringFormat(arrArg);
+                        console.warn(output);
+                        break;
+                }
+            }
+
+            function stringFormat(arrArg) {
+                var input = "" + arrArg[0];
+                var output = "";
+                var temp="";
+                for (var i = 0; i < input.length; i++) {
+                
+                    if (input.charAt(i) === '{') {
+                        if (typeof arrArg[parseInt(input.charAt(i + 1)) + 1] === undefined) {
+                            temp = "There is no argument on this position";
+                        }
+                        else {
+                            temp = arrArg[parseInt(input.charAt(i + 1)) + 1];
+                        }
+                        output += temp;
+                        i = i + 2;
+                    }
+
+                    else {
+                        output += input.charAt(i);
+                    }
+                }
+                return output;
+            }
+        }
+        var specialConsole = new SpecialConsole();
+        specialConsole.writeLine("Message: hello");
+        specialConsole.writeLine("Message: {0}", "hello");
+        specialConsole.writeError("Error: {0}", "Something happened");
+        specialConsole.writeWarning("Warning: {0}", "A warning");
+        
+    </script>
+</body>
+</html>

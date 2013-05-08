@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <script type="text/javascript">
+        var input1 = document.createElement('input');
+        input1.type = 'color';
+        document.body.appendChild(input1);
+
+        var input2 = document.createElement('input');
+        input2.type = 'color';
+        document.body.appendChild(input2);
+
+        var textArea = document.createElement('textarea');
+        document.body.appendChild(textArea);
+
+        setInterval(function () {
+            textArea.style.color = input1.value;
+            textArea.style.backgroundColor = input2.value;
+        }, 500);
+    </script>
+</body>
+</html>

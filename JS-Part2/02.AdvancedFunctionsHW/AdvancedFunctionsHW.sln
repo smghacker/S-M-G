@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01.ModuleForWorkingWithDOM", "01.ModuleForWorkingWithDOM\01.ModuleForWorkingWithDOM.csproj", "{F2BDB9D4-53DD-42E3-99FD-F0518A6A745E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02.MovingDivElements", "02.MovingDivElements\02.MovingDivElements.csproj", "{2AA1B47A-9BB3-4410-B7AE-5BB23C1FD5A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "03.ModuleForConsole", "03.ModuleForConsole\03.ModuleForConsole.csproj", "{A3A6B258-E9E9-4018-8C42-B50C2505742B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F2BDB9D4-53DD-42E3-99FD-F0518A6A745E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2BDB9D4-53DD-42E3-99FD-F0518A6A745E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2BDB9D4-53DD-42E3-99FD-F0518A6A745E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2BDB9D4-53DD-42E3-99FD-F0518A6A745E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AA1B47A-9BB3-4410-B7AE-5BB23C1FD5A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AA1B47A-9BB3-4410-B7AE-5BB23C1FD5A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AA1B47A-9BB3-4410-B7AE-5BB23C1FD5A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AA1B47A-9BB3-4410-B7AE-5BB23C1FD5A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3A6B258-E9E9-4018-8C42-B50C2505742B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3A6B258-E9E9-4018-8C42-B50C2505742B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3A6B258-E9E9-4018-8C42-B50C2505742B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3A6B258-E9E9-4018-8C42-B50C2505742B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

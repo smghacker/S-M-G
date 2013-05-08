@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style type="text/css">
+        div {
+            width:50px;
+            height:50px;
+            position:absolute;
+            border-width:2px;
+            border-style:solid;
+        }
+    </style>
+</head>
+<body>
+    <button onclick="addRect()">RECTANGULAR</button>
+    <button onclick="addCircular()">CIRCULAR</button>
+    <script type="text/javascript">
+        //Create a module that works with moving div elements. Implement functionality for:
+        //Add new moving div element to the DOM
+        //The module should generate random background, font and border colors
+        //All the div elements are with the same width and height
+        //The movements of the div elements can be either circular or rectangular
+        //The elements should be moving all the time
+        function MovingShapes() {
+            this.add = function (typeOfMovement) {
+                switch (typeOfMovement) {
+                    case "rect":
+                        var div = createDiv();
+                        document.body.appendChild(div);
+                        var angle = Math.floor((Math.random() * 100) + 80)
+                        moveInRectangular(div, angle);
+                        break;
+                    case "ellipse":
+                        var div = createDiv();
+                        document.body.appendChild(div);
+                        var angle = Math.floor((Math.random() * 100) + 1000)
+                        moveInCircular(div,angle);
+                        break;
+                }
+            }
+
+            var createDiv = function () {
+                var newDiv = document.createElement("div");
+                newDiv.style.backgroundColor = generateRandomColor();
+                newDiv.style.borderColor = generateRandomColor();
+                newDiv.style.color = generateRandomColor();
+                return newDiv;
+            }
+
+            var moveInCircular = function (div, angle) {
+                var radius = 100;
+                var centerX = Math.floor((Math.random() * 100) + 250);
+                var centerY = Math.floor((Math.random() * 100) + 250);
+                setInterval(function () {
+                    angle += Math.PI / 180;
+
+                    //circle's parametric function
+                    var x1 = Math.floor(centerX + (radius * Math.cos(angle)));
+                    var y1 = Math.floor(centerY + (radius * Math.sin(angle)));
+                    //set div's new coordinates
+                    div.style.top = x1 + "px";
+                    div.style.left = y1 + "px";
+                }, 3);
+            }
+
+            var moveInRectangular=function (div,angle){
+                var centerX = Math.floor((Math.random() * 100) + 300);
+                var centerY = Math.floor((Math.random() * 100) + 300);
+                var semiWidth = Math.floor((Math.random() * 100) + 100);
+                var semiHeight = Math.floor((Math.random() * 100) + 100);
+                setInterval(function () {
+                    angle += Math.PI / 180;
+                    var x1 = centerX + semiWidth * (Math.abs(Math.cos(angle)) * Math.cos(angle) + Math.abs(Math.sin(angle)) * Math.sin(angle));
+                    var y1 = centerY + semiHeight * (Math.abs(Math.cos(angle)) * Math.cos(angle) - Math.abs(Math.sin(angle)) * Math.sin(angle));
+                    div.style.top = x1 + "px";
+                    div.style.left = y1 + "px";
+                },3);
+            }
+            function generateRandomColor() {
+                var red = (Math.random() * 256) | 0;
+                var green = (Math.random() * 256) | 0;
+                var blue = (Math.random() * 256) | 0;
+
+                return "rgb(" + red + "," + green + "," + blue + ")";
+            }
+        }
+        
+        var movingShapes = new MovingShapes();
+        
+        function addRect() {
+            movingShapes.add("rect");
+        }
+
+        function addCircular() {
+            movingShapes.add("ellipse");
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>01.RandomDivs:)</title>
+	<style>
+		#wrapper, body, html {
+			min-height: 100%;
+			background: #ccc;
+		}
+
+	</style>
+</head>
+<body>
+	<div id="wrapper">
+		<a href="#" id="btn-start-shiny" onclick="onStartShinyButtonClick(event)">Start</a>
+		<a href="#" id="btn-stop-shiny" onclick="onStopShinyButtonClick(event)">Stop</a>
+	</div>
+	<script>
+	    //Random width and height between 20px and 100px-OK
+	    //Random background color-OK
+	    //Random font color-OK
+	    //Random position on the screen (position:absolute)-OK
+	    //A strong element with text "div" inside the div-OK
+	    //Random border-radius-OK
+	    //Random border color--OK
+	    //Random border-width between 1px and 20px-OK
+	    var wrapper = document.getElementById("wrapper");
+	    var count = 135;
+	    var divs = document.getElementsByClassName("shiny-div");
+	    var timer;
+	    var maxWidth = screen.width - 100;
+	    var maxHeight = screen.height - 300;
+
+	    generateShinyDivs(count);
+
+	    function generateShinyDivs(count) {
+
+	        for (var i = 0; i < count; i++) {
+	            var shinyDiv = document.createElement("div");
+
+	            var txt = document.createElement("strong");
+	            txt.innerText = "div";
+	            shinyDiv.appendChild(txt);
+
+	            makeDivShiny(shinyDiv);
+	            wrapper.appendChild(shinyDiv);
+	        }
+	    }
+
+	    function makeDivShiny(shinyDiv) {
+	        shinyDiv.style.position = "absolute";
+
+	        var topPos = parseInt(Math.random() * (maxHeight - 40));
+	        shinyDiv.style.top = topPos + "px";
+
+	        var leftPos = parseInt(Math.random() * (maxWidth - 40));
+	        shinyDiv.style.left = leftPos + "px";
+
+	        var width = parseInt(Math.floor((Math.random()*100)+20));
+	        shinyDiv.style.width = width + "px";
+
+	        var height = parseInt(Math.floor((Math.random() * 100) + 20));
+	        shinyDiv.style.height = height+"px";
+
+	        shinyDiv.style.borderColor = generateRandomColor();
+	        shinyDiv.style.borderWidth = parseInt(Math.floor((Math.random() * 20) + 1)) + "px";
+	        shinyDiv.style.borderRadius = parseInt(Math.floor((Math.random() * 20) + 1)) + "px";
+	        shinyDiv.style.backgroundColor = generateRandomColor();
+	        shinyDiv.style.color = generateRandomColor();
+	    }
+
+	    function generateRandomColor() {
+	        var red = (Math.random() * 256) | 0;
+	        var green = (Math.random() * 256) | 0;
+	        var blue = (Math.random() * 256) | 0;
+
+	        return "rgb(" + red + "," + green + "," + blue + ")";
+	    }
+
+	    function onStartShinyButtonClick(e) {
+	        if (!e) e = window.event;
+
+	        timer = setInterval(function () {
+	            for (var i = 0, len = divs.length; i < len; i++) {
+	                makeDivShiny(divs[i]);
+	            }
+	        }, 100);
+
+	        if (e.preventDefault) {
+	            e.preventDefault();
+	        }
+
+	        return false;
+	    }
+
+	    function onStopShinyButtonClick(e) {
+	        if (!e) e = window.event;
+
+	        clearInterval(timer);
+	        document.getElementById("btn-stop-shiny").disabled = true;
+
+	        if (e.preventDefault) {
+	            e.preventDefault();
+	        }
+
+	        return false;
+	    }
+	</script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>02.Move Five divs in a circle</title>
+    
+    <style>
+        div {
+            position:absolute;
+            top:200px;
+            left:200px;
+            width:25px;
+            height:25px;
+            border:2px solid black;
+        }
+        #greenDiv {
+            background:green;
+        }
+        #blueDiv {
+            background:blue;
+        }
+        #redDiv {
+            
+            background:red;
+        }
+        #yellowDiv {
+            background:yellow;
+        }
+        #brownDiv {
+            background:brown;
+        }
+    </style>
+</head>
+<body>
+ 
+    <div id="greenDiv"></div>
+    <div id="blueDiv"></div>
+    <div id="redDiv"></div>
+    <div id="yellowDiv"></div>
+    <div id="brownDiv"></div>
+    <script type="text/javascript">
+        //02.Write a script that creates 5 div elements and moves them in circular path with interval of 100 milliseconds
+        function moveDiv(angle, greenDiv, blueDiv, yellowDiv, redDiv, brownDiv) {
+            angle += Math.PI / 180;
+
+            var radius = 100;
+            var centerX = 500;
+            var centerY = 500;
+            //circle's parametric function
+            var x1 = Math.floor(centerX + (radius * Math.cos(angle))); 
+            var y1 = Math.floor(centerY + (radius * Math.sin(angle)));
+            //set div's new coordinates
+            greenDiv.style.top = x1 + "px"; 
+            greenDiv.style.left = y1 + "px"; 
+
+            var x2 = Math.floor(centerX + (radius * Math.cos(angle-1)));
+            var y2 = Math.floor(centerY + (radius * Math.sin(angle-1)));
+            blueDiv.style.top = x2 + "px";
+            blueDiv.style.left = y2 + "px";
+
+            var x3 = Math.floor(centerX + (radius * Math.cos(angle - 2)));
+            var y3 = Math.floor(centerY + (radius * Math.sin(angle - 2)));
+            yellowDiv.style.top = x3 + "px"; 
+            yellowDiv.style.left = y3 + "px";
+
+            var x4 = Math.floor(centerX + (radius * Math.cos(angle - 3)));
+            var y4 = Math.floor(centerY + (radius * Math.sin(angle - 3)));
+            redDiv.style.top = x4 + "px";
+            redDiv.style.left = y4 + "px";
+
+            var x5 = Math.floor(centerX + (radius * Math.cos(angle - 4)));
+            var y5 = Math.floor(centerY + (radius * Math.sin(angle - 4)));
+            brownDiv.style.top = x5 + "px";
+            brownDiv.style.left = y5 + "px";
+
+            setTimeout(function () { 
+                moveDiv(angle, greenDiv, blueDiv, yellowDiv, redDiv, brownDiv);
+            }, 100);
+        }
+
+        greenDiv = document.getElementById("greenDiv");
+        blueDiv = document.getElementById("blueDiv");
+        yellowDiv = document.getElementById("yellowDiv");
+        redDiv = document.getElementById("redDiv");
+        brownDiv = document.getElementById("brownDiv");
+
+        moveDiv(Math.PI / 5, greenDiv, blueDiv, yellowDiv, redDiv, brownDiv); 
+    </script>
+</body>
+</html>

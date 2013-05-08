@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Test AirVehicle</title>
+    <script type="text/javascript" src="Vehicles.js"></script>
+    <style type="text/css">
+        p {
+            font-size: 30px;
+        }
+    </style>
+</head>
+<body>
+    <p>Check the Console</p>
+    <script type="text/javascript">
+        console.log("------------------------------------------");
+        console.log("----T-E-S-T----A-I-R----V-E-H-I-C-L-E----");
+        console.log("------------------------------------------");
+        var airVehicle = new AirVehicle(4);
+        console.log("TestVehicle has " + airVehicle.numberOfPropulsionUnits + " propelling nozzles");
+
+        console.log(" Test 1: Inheritance ");
+        console.log("   Is air vehicle instance of vehicle " + (airVehicle instanceof Vehicle));
+
+        console.log(" Test 2: (prop) Speed");
+        airVehicle.SetSpeed(122);
+        console.log("   Current speed is " + airVehicle.GetSpeed());
+
+        console.log(" Test 3:Acceleration method with switched off afterburners");
+        var oldSpeedAir = airVehicle.GetSpeed();
+        airVehicle.AfterBurnersOn(false);
+        airVehicle.Accelerate();
+        console.log("   Old speed is " + oldSpeedAir);
+        console.log("   After Acceleration speed is " + airVehicle.GetSpeed());
+        console.log("   Acceleration is " + (airVehicle.GetSpeed() - oldSpeedAir));
+
+        console.log(" Test 4:Acceleration method with switched on afterburners");
+        oldSpeedAir = airVehicle.GetSpeed();
+        airVehicle.AfterBurnersOn(true);
+        airVehicle.Accelerate();
+        console.log("   Old speed is " + oldSpeedAir);
+        console.log("   After Acceleration speed is " + airVehicle.GetSpeed());
+        console.log("   Acceleration is " + (airVehicle.GetSpeed() - oldSpeedAir));
+    </script>
+</body>
+</html>

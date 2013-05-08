@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Land vehicle test</title>
+    <script type="text/javascript" src="Vehicles.js"></script>
+    <style type="text/css">
+        p {
+            font-size: 30px;
+        }
+    </style>
+</head>
+<body>
+    <p>Check the Console</p>
+    <script type="text/javascript">
+        console.log("------------------------------------------");
+        console.log("---T-E-S-T----L-A-N-D----V-E-H-I-C-L-E---");
+        console.log("------------------------------------------");
+
+        var landVehicle = new LandVehicle(4,2);
+        console.log("TestVehicle has " + landVehicle.GetNumberOfPropulstionUnits()+" wheels");
+
+        console.log(" Test 1: Inheritance ");
+        console.log("   Is land vehicle instance of vehicle " + (landVehicle instanceof Vehicle));
+
+        console.log(" Test 2: Speed");
+        landVehicle.SetSpeed(120);
+        console.log("   Current speed is " + landVehicle.GetSpeed());
+
+        var oldSpeedLand = landVehicle.GetSpeed();
+        console.log(" Test 3:Acceleration method");
+        landVehicle.Accelerate();
+        console.log("   Old speed is " + oldSpeedLand);
+        console.log("   After Acceleration speed is " + landVehicle.GetSpeed());
+        console.log("   Acceleration is " + (landVehicle.GetSpeed() - oldSpeedLand));
+    </script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Amphibius Test</title>
+    <script type="text/javascript" src="Vehicles.js"></script>
+    <style type="text/css">
+        p {
+            font-size: 30px;
+        }
+    </style>
+</head>
+<body>
+    <p>Check the Console</p>
+    <script type="text/javascript">
+        console.log("------------------------------------------");
+        console.log("T-E-S-T---A-M-P-H-I-B-I-U-S---V-E-H-I-C-L-E");
+        console.log("------------------------------------------");
+        var amphibiusVehicle = new Amphibius(3);
+        console.log(" Test 1: Inheritance ");
+        console.log("   Is land vehicle instance of vehicle " + (amphibiusVehicle instanceof Vehicle));
+
+        console.log(" Test 2: (prop) Speed");
+        amphibiusVehicle.SetSpeed(130);
+        console.log("   Current speed is " + amphibiusVehicle.GetSpeed());
+
+        console.log(" Test 3: Change mode");
+        console.log("   Current mode is " + amphibiusVehicle.GetMode());
+        amphibiusVehicle.ChangeMode("water");
+        console.log("   Mode after the change is " + amphibiusVehicle.GetMode());
+
+        console.log(" Test 4: changeSpinDirection method in mode-land");
+        amphibiusVehicle.ChangeMode("land");
+        amphibiusVehicle.ChangeSpinDirection("clockwise");
+
+        console.log(" Test 5: Acceleration in mode-land");
+        var oldSpeedAmp = amphibiusVehicle.GetSpeed();
+        amphibiusVehicle.Accelerate();
+        console.log("   Current speed is " + oldSpeedAmp);
+        console.log("   After Acceleration speed is " + amphibiusVehicle.GetSpeed());
+        console.log("   Acceleration is " + (amphibiusVehicle.GetSpeed() - oldSpeedAmp));
+
+        console.log(" Test 6: Acceleration in mode-water");
+        oldSpeedAmp = amphibiusVehicle.GetSpeed();
+        amphibiusVehicle.ChangeMode("water");
+        amphibiusVehicle.Accelerate();
+        console.log("   Current speed is " + oldSpeedAmp);
+        console.log("   After Acceleration speed is " + amphibiusVehicle.GetSpeed());
+        console.log("   Acceleration is " + (amphibiusVehicle.GetSpeed() - oldSpeedAmp));
+
+        console.log(" Test 7: Acceleration in mode-water spin direction counter-clockwise");
+        oldSpeedAmp = amphibiusVehicle.GetSpeed();
+        amphibiusVehicle.ChangeSpinDirection("counter-clockwise");
+        amphibiusVehicle.Accelerate();
+        console.log("   Current speed is " + oldSpeedAmp);
+        console.log("   After Acceleration speed is " + amphibiusVehicle.GetSpeed()); 4
+        console.log("   Acceleration is " + (amphibiusVehicle.GetSpeed() - oldSpeedAmp));
+    </script>
+</body>
+</html>

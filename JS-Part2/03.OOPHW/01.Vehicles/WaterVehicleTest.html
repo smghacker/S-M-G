@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Water vehicle test</title>
+    <script type="text/javascript" src="Vehicles.js"></script>
+    <style type="text/css">
+        p {
+            font-size: 30px;
+        }
+    </style>
+</head>
+<body>
+    <p>Check the Console</p>
+    <script type="text/javascript">
+        console.log("------------------------------------------");
+        console.log("--T-E-S-T----W-A-T-E-R----V-E-H-I-C-L-E--");
+        console.log("------------------------------------------");
+        var waterVehicle = new WaterVehicle(3);
+        console.log("TestVehicle has " + waterVehicle.numberOfPropulsionUnits+" propellers");
+        console.log(" Test 1: Inheritance ");
+        console.log("   Is land vehicle instance of vehicle " + (waterVehicle instanceof Vehicle));
+
+        console.log(" Test 2: (prop) Speed");
+        waterVehicle.SetSpeed(140);
+        console.log("   Current speed is " + waterVehicle.GetSpeed());
+
+        console.log(" Test 3:Spin direction changing.");
+        console.log("   Current spin direction is " + waterVehicle.GetSpinDirection());
+        waterVehicle.ChangeSpinDirection("counter-clockwise");
+        console.log("   Spin direction after change is " + waterVehicle.GetSpinDirection());
+        
+        console.log(" Test 4:Acceleration method when the spin direction is clockwise");
+        waterVehicle.ChangeSpinDirection("clockwise");
+        var oldSpeedWater = waterVehicle.GetSpeed();
+        console.log("   Old speed is " + oldSpeedWater);
+        waterVehicle.Accelerate();
+        console.log("   After Acceleration speed is " + waterVehicle.GetSpeed());
+        console.log("   Acceleration is " + (waterVehicle.GetSpeed() - oldSpeedWater));
+
+        console.log(" Test 5:Acceleration method when the spin direction is counter-clockwise");
+        waterVehicle.ChangeSpinDirection("counter-clockwise");
+        oldSpeedWater = waterVehicle.GetSpeed();
+        waterVehicle.Accelerate();
+        console.log("   Old speed is " + oldSpeedWater);
+        console.log("   After Acceleration speed is " + waterVehicle.GetSpeed());
+        console.log("   Acceleration is " + (waterVehicle.GetSpeed() - oldSpeedWater));
+    </script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style type="text/css">
+        span {
+            display:inline-block;
+            margin:5px;
+        }
+        div {
+            position:absolute;
+            top:300px;
+            left:300px;
+            border:2px solid black;
+        }
+        p {
+            position:absolute;
+            top:250px;
+            left:300px;
+            font-size:20px;
+        }
+    </style>
+</head>
+<body>
+    <p>Generating a tag using my formulae for font size</p>
+    <script type="text/javascript">
+        var tags = ["cms", "javascript", "js", "ASP.NET MVC", ".net", ".net", "css",
+            "wordpress", "xaml", "js", "http", "web", "asp.net", "asp.net MVC", "ASP.NET MVC",
+            "wp", "javascript", "js", "cms", "html", "javascript", "http", "http", "CMS"];
+
+        var generatedTagsWithOccurences = saveOccurences(tags);
+        var orderedTags = orderTagsByOccurences(generatedTagsWithOccurences);
+        var tagCloud = generateTagCloud(orderedTags, 17, 28);
+
+        document.body.appendChild(tagCloud);
+
+        function Tag(name, occurence) {
+            return {
+                tagName: name,
+                occurence: occurence
+            }
+
+        }
+
+        function generateTagCloud(tagsArr, minSize, maxSize) {
+            var cloud = document.createElement("div");
+            cloud.style.width = 250 + "px";
+            var tagsArrLen = tagsArr.length;
+            var singleTagWithItsFontSize;
+            //Algorithm for generating the font size
+            for (var i = 0; i < tagsArr.length; i++) {
+                if (i === 0) {
+                    singleTagWithItsFontSize = document.createElement("span");
+                    singleTagWithItsFontSize.innerText = tagsArr[i].tagName;
+                    singleTagWithItsFontSize.style.fontSize = maxSize + "px";
+                    cloud.appendChild(singleTagWithItsFontSize);
+                } else if (i === tagsArrLen) {
+                    singleTagWithItsFontSize = document.createElement("span");
+                    singleTagWithItsFontSize.innerText = tagsArr[i].tagName;
+                    singleTagWithItsFontSize.style.fontSize = minSize + "px";
+                    cloud.appendChild(singleTagWithItsFontSize);
+                } else {
+                    singleTagWithItsFontSize = document.createElement("span");
+                    singleTagWithItsFontSize.innerText = tagsArr[i].tagName;
+                    if (tagsArr[i].occurence === tagsArr[0].occurence) {
+                        singleTagWithItsFontSize.style.fontSize = maxSize + "px";
+                    } else if (tagsArr[i].occurence === tagsArr[tagsArrLen - 1].occurence) {
+                        singleTagWithItsFontSize.style.fontSize = minSize + "px";
+                    } else {
+                        //My formulae for font size
+                        var formulae = parseFloat(minSize + (tagsArr[0].occurence - tagsArr[i].occurence) * (maxSize - minSize) / tagsArr[0].occurence);
+                        var fontSize = formulae + "px";
+
+                        singleTagWithItsFontSize.style.fontSize = fontSize;
+                    }
+
+                    cloud.appendChild(singleTagWithItsFontSize);
+                }
+            }
+            return cloud;
+        }
+
+        //Saving occurences will be made by finding all occurence of
+        //some tag then create object Tag(tagName,occurences) and save to an array
+        function saveOccurences(tagsArr) {
+            var whereWeHaveBeen = [];
+
+            for (var i = 0; i < tagsArr.length; i++) {
+                whereWeHaveBeen[i]=true;
+            }
+
+            var count=0;
+            var position=0;
+            var tagsWithOccurences=[];
+            for (var i = 0; i < tagsArr.length; i++) {
+                if (whereWeHaveBeen[i] !== false) {
+                    for (var j = i; j < tagsArr.length; j++) {
+                        if (tagsArr[j].toLowerCase() === tagsArr[i].toLowerCase())
+                        {
+                            count++;
+                            whereWeHaveBeen[j]=false;
+                        }
+                    }
+                    tagsWithOccurences[position] = new Tag(tagsArr[i].toLowerCase(), count);
+                    position++;
+                    count=0;
+                }
+            }
+            return tagsWithOccurences;
+        }
+        //Ordering tags by occurences using selection sort
+        function orderTagsByOccurences(tagsArr) {
+            for (var i = 0; i < tagsArr.length; i++) {
+                for (var j = 0; j < tagsArr.length; j++) {
+                    if (tagsArr[j].occurence < tagsArr[i].occurence) {
+                        var oldValue = tagsArr[i];
+                        tagsArr[i] = tagsArr[j];
+                        tagsArr[j] = oldValue;
+                    }
+                }
+            }
+            return tagsArr;
+        }
+    </script>
+</body>
+</html>

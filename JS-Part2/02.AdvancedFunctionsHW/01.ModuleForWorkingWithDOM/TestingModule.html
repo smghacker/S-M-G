@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script type="text/javascript" src="sizzle.js"></script>
+</head>
+<body>
+    <ul>
+        <li>First</li>
+        <li>Second</li>
+    </ul>
+
+    <ul>
+        <li>First</li>
+        <li>Second</li>
+    </ul>
+    <span id="span">Span</span>
+    <script type="text/javascript">
+        /*
+        Create a module for working to work with DOM. The module should have the following functionality
+        Add element to parent element by given selector
+        Remove element from the DOM  by given selector
+        Attach event to given selector by given event type and event handler
+        Add elements to buffer, which appends them to the DOM when their for some selector count becomes 100
+        The buffer contains elements for each selector it gets
+        Get elements by CSS selector
+        The module should reveal only the methods
+        */
+        
+        //Cross-browser shim for query selector(all) using Sizzle
+        document.querySelector = function (selector) {
+            return Sizzle(selector)[0];
+        };
+
+        document.querySelectorAll = function (selector) {
+            return Sizzle(selector);
+        };
+
+        function DomModule() {
+            this.appendChild = function appendChild(child, elementSelector) {
+                var element = document.querySelector(elementSelector);
+                element.appendChild(child);
+            }
+
+            this.removeChild = function removeChild(parent, child) {
+                var selector = parent + '>' + child;
+                var elements = document.querySelectorAll(selector);
+                for (var i = 0; i < elements.length; i++) {
+                    elements[i].parentNode.removeChild(elements[i]);
+                }
+            }
+
+            this.attachEvent = function attachEvent(selector, eventType, eventHandler) {
+                var elements = document.querySelectorAll(selector);
+                var len = elements.length;
+                for (var i = 0; i < len; i++) {
+                    elements[i].attachEvent(eventType,eventHandler);
+                }
+            }
+
+            this.getElements = function getElements(selector) {
+                return document.querySelectorAll(selector);
+            }
+
+            function Buffer(selector) {
+                this.selector = selector;
+                this.elements = [];
+                this.addElement = function addElement(el) {
+                    if (this.elements.length == 100) {
+                        for (var i = 0; i < 100; i++) {
+                            //Check if the selector is a variable or css3 selector
+                            if (typeof selector === String) {
+                                document.querySelector(this.selector).appendChild(this.elements[i]);
+                            } else {
+                                selector.appendChild(this.elements[i]);
+                            }
+                        }
+                    } else {
+                        this.elements.push(el);
+                    }
+                }
+            }
+
+            var buffers = [];
+            this.appendBuffer = function appendBuffer(selector, el) {
+                var isExistingSelector = false;
+                var position;
+                for (var i = 0; i < buffers.length; i++) {
+                    if (buffers[i].selector == selector) {
+                        isExistingSelector = true;
+                        position = i;
+                    }
+                }
+
+                if (isExistingSelector) {
+                    buffers[position].addElement(el);
+                } else {
+                    var newBuffer = new Buffer(selector);
+                    newBuffer.addElement(el);
+                    buffers.push(newBuffer);
+                }
+                
+            }
+        }
+
+        var domModule = new DomModule();
+        var div = document.createElement("div");
+        div.style.width = 100 + "px";
+        div.style.height = 16 + "px";
+        div.style.border = 2 + "px solid black";
+        div.innerText = "I am in span";
+        div.style.display = "inline";
+
+        domModule.appendChild(div, "#span");
+        domModule.removeChild("ul", "li:first-child");
+        domModule.attachEvent("#span", 'click', function () { alert("I was clicked"); });
+
+        var unorderedLists = domModule.getElements("ul");
+
+        //Testing appendToBuffer
+        for (var i = 0; i < 101; i++) {
+            var newDiv = document.createElement("div");
+            newDiv.innerText=i;
+            domModule.appendBuffer(div, newDiv);
+        }
+    </script>
+</body>
+</html>
