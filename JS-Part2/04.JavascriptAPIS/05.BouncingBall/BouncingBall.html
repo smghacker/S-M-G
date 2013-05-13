@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Bouncing ball</title>
+    <style type="text/css">
+        #ball {
+            border: 2px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="ball" width="800" height="600"></canvas>
+    <script>
+        var canvas = document.getElementById('ball');
+        var context = canvas.getContext('2d');
+        
+        var height = canvas.height;
+        var width = canvas.width;
+
+        var radius = 10;
+
+        function createBall(x,y)
+        {
+            context.beginPath();
+            context.arc(x, y, radius, 0, 2 * Math.PI, false);
+            context.fillStyle = 'green';
+            context.fill();
+            context.lineWidth = 5;
+            context.strokeStyle = '#003300';
+            context.stroke();
+        }
+
+        var coordX = 0;
+        var coordY = 0;
+        var step = 10;
+        var signX = 1;
+        var signY = 1;
+        setInterval(function () {
+            context.clearRect(0, 0, width, height); createBall(coordX, coordY);
+            coordX += step * signX;
+            coordY += step * signY;
+            //we have width - radius because we move the center so if it is not that way the ball will sink out of the canvas to its center
+            if (coordX === width - radius) {
+                signX = -1;
+            }
+
+            if (coordX <= radius) {
+                signX = 1;
+            }
+
+            if (coordY === height - radius) {
+                signY = -1;
+            }
+
+            if (coordY <= radius) {
+                signY = 1;
+            }
+        }, 50);
+    </script>
+</body>
+</html>

@@ -65,6 +65,7 @@ namespace SchoolTest
         }
 
         [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException))]
         public void CourseAddStudentAlreadyInTheCourseTest()
         {
             Course course = new Course("C#", new List<Student>());

@@ -38,11 +38,12 @@ namespace SchoolTest
         }
 
         [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException))]
         public void SchoolAddCertainStudentWhoExistsAlreadyTest()
         {
             School school = new School(new List<Student>(), new List<Course>());
             Student student = new Student("Svetlin", 11111);
-            Student student1 = new Student("Svetlin", 11111);
+            Student student1 = new Student("Pesho", 11111);
             school.AddStudent(student);
             school.AddStudent(student1);
             Assert.AreEqual(1, school.AllStudents.Count);
@@ -58,6 +59,7 @@ namespace SchoolTest
         }
 
         [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException))]
         public void SchoolAddCertainCourseWhoExistsAlreadyTest()
         {
             School school = new School(new List<Student>(), new List<Course>());

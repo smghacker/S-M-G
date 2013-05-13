@@ -1,0 +1,156 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>TrashBin</title>
+    <style type="text/css">
+        #trashBin {
+            position:absolute;
+            top:10px;
+            left:80%;
+            height:500px; 
+            width:200px; 
+            background: url(TrashBinClosed.png) no-repeat;
+        }
+        img {
+            position:absolute;
+        }
+    </style>
+</head>
+<body>
+    <p>First of all you should type your nickname and then click the start button</p>
+    <button onclick ="start()">Start</button>
+    <div id="trash"></div>
+    <div id="trashBin" ondragover="allowDrop(event)" ondragleave="restoreClosedState()" ondrop="drop(event)"></div>
+    <label for="nickname">Nickname:</label>
+    <input type="text" id="nickname"/>
+    <ul id="topScores">
+        <li>Top Scores</li>
+    </ul>
+    <script type="text/javascript">
+        //the initial container that holds the trash
+        var trashContainter = document.getElementById("trash");
+        //target bin
+        var trashBin = document.getElementById("trashBin");
+        var numberOfTrashItems = 2;
+
+
+        function allowDrop(ev) {
+            ev.preventDefault(); //Cancels the default action of the event
+            trashBin.style.background = "url(TrashBinOpened1.png) no-repeat";
+        }
+
+        function restoreClosedState() {
+            trashBin.style.background = "url(TrashBinClosed.png) no-repeat";
+        }
+
+        function drag(ev) {
+            //dataTransfer is collecting some data by key value pair in this case dragged id -targetid
+            ev.dataTransfer.setData("dragged-id", ev.target.id);
+        }
+
+        function drop(ev) {
+            ev.preventDefault();
+            var data = ev.dataTransfer.getData("dragged-id");
+            var elementToRemove = document.getElementById(data);
+            trashContainter.removeChild(elementToRemove);
+            numberOfTrashItems--;
+            if (numberOfTrashItems === 0) {
+                finish();
+            }
+
+            restoreClosedState();
+        }
+
+        function Player(nickname, time) {
+            var nickname = nickname;
+            var time = time;
+
+            this.getNickname = function () {
+                return nickname;
+            }
+
+            this.getTime = function () {
+                return time;
+            }
+
+            this.toString = function () {
+                return "Nickname: " + nickname + " Score: " + time;
+            }
+        }
+
+        window.onload = function showPlayers() {
+            for (var i = 0; i < 5; i++) {
+                var key = String(i);
+                if (localStorage.getItem(key) != undefined) {
+                    var newLi = document.createElement("li");
+
+                    var player = localStorage.getItem(key);
+                    newLi.innerHTML = player.toString();
+
+                    var list = document.getElementById("topScores");
+                    list.appendChild(newLi);
+                }
+            }
+        }
+
+        //Creating trash - in certain district random generatred positions
+        var startDate;
+        function start() {
+            for (var i = 0; i < numberOfTrashItems; i++) {
+                var trashItem = document.createElement("img");
+                trashItem.style.top = Math.floor((Math.random() * 100) + 50) + "px";
+                trashItem.style.left = Math.floor((Math.random() * 500) + 200) + "px";
+                trashItem.id = "trashItem" + i;
+                trashItem["src"] = "TrashItem.png";
+                trashItem.draggable = "true";
+                trashItem.addEventListener("dragstart", drag, false);
+                trashContainter.appendChild(trashItem);
+            }
+            startDate = new Date().getTime();
+        }
+
+        var finishDate;
+        var positionForNewPlayer = localStorage.length;
+        function finish() {
+            finishDate = new Date().getTime();
+            var time = finishDate - startDate;
+            alert("Your result is" + time);
+
+            if (document.getElementById("nickname").value === null) {
+                var nickname = "Empty" + positionForNewPlayer;
+            } else {
+                var nickname = document.getElementById("nickname").value;
+            }
+
+            var newPlayer = new Player(nickname, time).toString();
+            localStorage.setItem("" + positionForNewPlayer, newPlayer);
+
+            //Sort
+            for (var i = 0; i < positionForNewPlayer + 1; i++) {
+                var keyOuter = "" + i;
+
+                var stringPlayer1 = localStorage.getItem(keyOuter).split(' ');
+                var nickPlayer1 = stringPlayer1[1];
+                var timePlayer1 = stringPlayer1[3];
+                var playerOuter = new Player(nickPlayer1, timePlayer1);
+
+                for (var j = i + 1; j < positionForNewPlayer + 1; j++) {
+                    var keyInner = "" + j;
+
+                    var stringPlayer2 = localStorage.getItem(keyInner).split(' ');
+                    var nickPlayer2 = stringPlayer2[1];
+                    var timePlayer2 = stringPlayer2[3];
+                    var innerPlayer = new Player(nickPlayer2, timePlayer2);
+
+                    if (innerPlayer.getTime() < playerOuter.getTime()) {
+                        localStorage.removeItem(keyInner);
+                        localStorage.setItem(keyInner, playerOuter);
+                        localStorage.removeItem(keyOuter);
+                        localStorage.setItem(keyOuter, innerPlayer);
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>

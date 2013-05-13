@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style type="text/css">
+        #previous, #next {            
+            position:relative;
+            display:inline-block;
+        }
+        #previous {
+            left:420px;
+        }
+        #next {
+            left:715px;
+        }
+        #imgContainer {
+            position:relative;
+            left:420px;
+            width:420px;
+            height:420px;
+            border:2px solid black;
+            border-radius:5px;
+        }
+        #image {
+            margin:10px;
+            width:400px;
+            height:400px;
+        }
+    </style>
+</head>
+<body>
+    <div id="imgContainer"><img src="heart.jpg" id="image"/></div>
+    <button id="previous">Previous</button>
+    <button id="next">Next</button>
+
+    <script type="text/javascript">
+
+        function SourceContainer() {
+            var self = this;
+            self.sources = [];
+
+            
+
+            self.addSource = function (element) {
+                self.sources.push(element);
+            }
+
+            self.removeSource = function (element) {
+                var length = self.sources.length;
+                for (var i = 0; i < length; i++) {
+                    if (self.sources[i] === element) {
+                        self.sources.splice(i, 1, element)
+                    }
+                };
+            }
+           
+            self.getSource = function (currentPosition) {
+                var numberOfSources = self.sources.length;
+                if (currentPosition < 0) {
+                    var position = Math.abs(currentPosition + numberOfSources) % numberOfSources;
+                    var src = self.sources[position];
+                } else {
+                    var src = self.sources[currentPosition % numberOfSources];
+                }
+                return src;
+            }
+        }
+
+        var imgSourceContainer = new SourceContainer();
+
+        imgSourceContainer.addSource("heart.jpg");
+        imgSourceContainer.addSource("keplerSystem.jpg");
+        imgSourceContainer.addSource("MicroscopeImg.jpg");
+        
+        var imageContainer = document.getElementById("image");
+        var next = document.getElementById("next");
+        var previous = document.getElementById("previous");
+
+        var currentPosition = 0;
+
+        previous.onclick = function () {
+            currentPosition--;
+            var src = imgSourceContainer.getSource(currentPosition);
+            imageContainer.src = src;
+
+        }
+
+        next.onclick = function () {
+            currentPosition++;
+            var src = imgSourceContainer.getSource(currentPosition);
+            imageContainer.src = src;
+        }
+    </script>
+</body>
+</html>

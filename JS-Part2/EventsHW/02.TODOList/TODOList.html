@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body >
+    <div>
+        <input type="text" id="taskInput"/>
+        <input type="button" id="add" value="Add"/>
+        <input type="button" id="deleteItem" value="Delete"/>
+        <input type="button" id="hide" value="Hide"/>
+        <input type="button" id="show" value="Show"/>
+    </div>
+    <ul id="listOfTasks">
+        
+    </ul>
+
+    <script>
+        (function(){
+            var listOfTasks = document.getElementById('listOfTasks');
+
+            var add = document.getElementById('add');
+            add.addEventListener('click', function () {
+                var taskInput = document.getElementById('taskInput');
+                if (taskInput != null) {
+                    var li = document.createElement('li');
+                    var html = '';
+                    html += '<div class="content"><input type="checkbox" id="selected"></checkbox><span>' + taskInput.value + '</span></div>';
+                    li.innerHTML = html;
+                    listOfTasks.appendChild(li);
+                }
+            });
+
+            var deleteItem = document.getElementById('deleteItem');
+            deleteItem.addEventListener('click', function () {
+                var selectedList = listOfTasks.querySelectorAll('#selected');
+                for (var i = 0; i < selectedList.length; i++) {
+                    if (selectedList[i].checked) {
+                        selectedList[i].parentElement.parentElement.parentElement.removeChild(selectedList[i].parentElement.parentElement);
+                    }
+                }
+            });
+
+            var hide = document.getElementById('hide');
+            hide.addEventListener('click', function () {
+                var selectedList = listOfTasks.querySelectorAll('#selected');
+                for (var i = 0; i < selectedList.length; i++) {
+                    if (selectedList[i].checked) {
+                        selectedList[i].parentElement.parentElement.style.display = 'none';
+                        selectedList[i].checked = false;
+                    }
+                }
+            });
+
+            var show = document.getElementById('show');
+            show.addEventListener('click', function () {
+                var selectedList = listOfTasks.querySelectorAll('li');
+                for (var i = 0; i < selectedList.length; i++) {
+                    if (selectedList[i].style.display === 'none') {
+                        selectedList[i].style.display = 'list-item';
+                    }
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

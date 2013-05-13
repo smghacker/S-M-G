@@ -70,6 +70,10 @@ namespace SchoolNS
                 {
                     this.Students.Add(student);
                 }
+                else
+                {
+                    throw new ArgumentException("Student with id" + student.UniqueNumber + "Exists", "student.UniqueNumber");
+                }
             }
             else
             {

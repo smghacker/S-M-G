@@ -62,7 +62,10 @@ namespace SchoolNS
             {
                 this.allStudents.Add(student);
             }
-            //I think here we don't need else because if such student exists he will continue to exist :)
+            else
+            {
+                throw new ArgumentException("Student with id" + student.UniqueNumber + "Exists","student.UniqueNumber");
+            }
 
         }
 
@@ -72,6 +75,10 @@ namespace SchoolNS
             if (index == -1)
             {
                 this.allCourses.Add(course);
+            }
+            else
+            {
+                throw new ArgumentException("Course with name" + course.Name+"already exists", "course");
             }
         }
 
