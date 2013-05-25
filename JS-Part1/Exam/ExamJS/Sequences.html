@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <script type="text/javascript">
+            function Solve(args) {
+                var answer = 0;
+                var arr = new Array(parseInt(args[0]));
+
+                var i = 0;
+                for (; i < arr.length; i++) {
+                    arr[i] = parseInt(args[i + 1]);
+                }
+                for (; i < args.length - 1; i++) {
+                    if (parseInt(arr[i + 1]) < parseInt(arr[i])) {
+                        answer++;
+                    } 
+                }
+
+                return answer + 1;
+            }
+        </script>
+    </body>
+</html>

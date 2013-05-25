@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <script type="text/javascript">
+            function Solve(args) {
+                var inputFirstLine = args[0].split(" ");
+                var n = inputFirstLine[0];
+                var m = inputFirstLine[1];
+                var numberOfJumps = inputFirstLine[2];
+
+                var coordinates = args[1].split(" ");
+                function point(x, y) {
+                    return {
+                        X: x,
+                        Y: y,
+                        toString: function () {
+                            return this.X + " " + this.Y;
+                        }
+                    }
+                }
+
+                var startPoint = new point(coordinates[0], coordinates[1]);
+            
+                var field = initMatrix(n, m);
+                var visitedPlaces = initMatrix2(n, m);
+            
+                visitedPlaces[startPoint.X][startPoint.Y] = 1;
+                var sum = field[parseInt(startPoint.X)][parseInt(startPoint.Y)];
+                var jumps = 0;
+                var currentPosition = startPoint;
+                while (true)
+                    for (var i = 0; i < numberOfJumps ; i++) {
+                        coordinates = args[i + 2].split(" ");
+                        var newCoordinateX = (parseInt(currentPosition.X) + parseInt(coordinates[0]));
+                        var newCoordinateY = (parseInt(currentPosition.Y) + parseInt(coordinates[1]));
+            
+                        if ((newCoordinateX < 0) ||
+                            (newCoordinateX >= m) ||
+                            (newCoordinateY >= n) ||
+                            (newCoordinateY < 0)) {
+
+                            return "escaped " + sum;
+                        }
+                        else {
+                            if (visitedPlaces[newCoordinateX][newCoordinateY] !== 1) {
+                                currentPosition.X = newCoordinateX;
+                                currentPosition.Y = newCoordinateY;
+
+                                sum += parseInt(field[parseInt(currentPosition.X)][parseInt(currentPosition.Y)]);
+                                visitedPlaces[parseInt(currentPosition.X), parseInt(currentPosition.Y)] = 0;
+                            }
+                            else {
+                                jumps += i - 1;
+                                return "caught " + jumps;
+                            }
+                        }
+                    }
+            }
+
+            function initMatrix(rows, cols) {
+                var matrix = [];
+                for (var i = 0; i < rows; i++) {
+                    matrix[i] = [];
+                    for (var j = 0; j < cols; j++) {
+                        matrix[i][j] = i * cols + j + 1;
+                    }
+                }
+
+                return matrix;
+            }
+
+            function initMatrix2(rows, cols) {
+                var matrix = [];
+                for (var i = 0; i < rows; i++) {
+                    matrix[i] = [];
+                    for (var j = 0; j < cols; j++) {
+                        matrix[i][j] = 0;
+                    }
+                }
+
+                return matrix;
+            }
+
+            console.log(Solve(["6 7 3","0 0","2 2","-2 2","3 -1"]));
+        </script>
+    </body>
+</html>
