@@ -114,7 +114,7 @@ namespace Matrix
             int col = 0; 
             int currentDirXCoef = 1;
             int currentDirYCoef = 1;
-            int dimension = this.Dimensions ;
+            int dimension = this.Dimensions;
             while (true)
             {
                 this.Matrix[row, col] = currentNumber;
@@ -134,7 +134,10 @@ namespace Matrix
                 }
                 else
                 {
-                    while ((row + currentDirXCoef >= dimension || row + currentDirXCoef < 0 || col + currentDirYCoef >= dimension || col + currentDirYCoef < 0 || this.Matrix[row + currentDirXCoef, col + currentDirYCoef] != 0))
+                    //Check if it is outside the matrix or it is already visited
+                    while ((row + currentDirXCoef >= dimension || row + currentDirXCoef < 0 || 
+                        col + currentDirYCoef >= dimension || col + currentDirYCoef < 0 || 
+                        this.Matrix[row + currentDirXCoef, col + currentDirYCoef] != 0))
                     {
                         ChangeDirectionCoeficients(ref currentDirXCoef, ref currentDirYCoef);
                     }

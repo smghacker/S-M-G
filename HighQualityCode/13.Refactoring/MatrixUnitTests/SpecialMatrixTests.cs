@@ -49,15 +49,5 @@ namespace MatrixUnitTests
 
             Assert.AreEqual(31, specialMatrix.Matrix[2, 1]);
         }
-
-        //[TestMethod]
-        //public void FillMatrixRegulTest()
-        //{
-        //    SpecialMatrix specialMatrix = new SpecialMatrix(6);
-        //
-        //    specialMatrix.FillMatrix();
-        //
-        //    Assert.AreEqual(31, specialMatrix.Matrix[2, 1]);
-        //}
     }
 }
